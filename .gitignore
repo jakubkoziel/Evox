@@ -109,3 +109,4 @@ fabric.properties
 __pycache__
 evox-env
 message.db
+test.db
