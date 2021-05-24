@@ -1,14 +1,19 @@
 import pytest
-from fastapi import Depends
 
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
+
 
 from ..database import Base, get_db
 from ..main import app
 from .. import security
+from app.services import message as message_service
+from app import schemas
 
+
+
+# creating connection to new datebase designed for test
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(
@@ -32,8 +37,10 @@ app.dependency_overrides[get_db] = override_get_db
 
 client = TestClient(app)
 
+db = next(override_get_db())
 
 
+# tests
 def test_create_user():
     response = client.post(
         "/messages/",
@@ -55,22 +62,23 @@ def test_create_user():
 
 
 
-from app.services.message import create
-from app import schemas
+
+
 
 def test_delete_message():
-    message = create(schemas.Message(content="New content"),  next(get_db()))
-    _id = message.id
+
+    message = message_service.create(schemas.Message(content="New content"), db )
+    id = message.id
 
     response = client.delete(
-        f"/messages/{_id}", headers={"Authorization": security.API_KEY}
+        f"/messages/{id}", headers={"Authorization": security.API_KEY}
     )
 
     assert response.status_code == 200
 
-    next(get_db()).commit()
+    db.commit()
 
-    # with pytest.raises(MessageNotFoundException):
-    #     services.messages.get_by_id(db=db, _id=_id)
+    with pytest.raises(Exception):
+         message_service.get(id,  db)
 
 
