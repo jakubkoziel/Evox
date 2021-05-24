@@ -9,8 +9,7 @@ from .. import security
 from app.services import message as message_service
 from app import schemas
 
-
-#create connection to database designed for tests
+# create connection to database designed for tests
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(
@@ -35,6 +34,7 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
+## Test part
 def test_create_message():
     response = client.post(
         "/messages/",
@@ -123,7 +123,6 @@ def test_increase_counter_message():
     message = message_service.create(schemas.Message(content="TEST CONTENT"), db)
     id = message.id
 
-    # Get to increase counter
     response = client.get(
         f"/messages/{id}", headers={"Authorization": security.API_KEY}
     )
@@ -133,7 +132,6 @@ def test_increase_counter_message():
     data = response.json()
     assert data['counter'] == 1
 
-    # Get to increase counter
     response = client.get(
         f"/messages/{id}", headers={"Authorization": security.API_KEY}
     )

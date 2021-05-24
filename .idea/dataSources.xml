@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\jakub\PycharmProjects\Evox\message.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="test" uuid="3d7085ab-95d6-4d75-874d-05e6c94f90e7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\jakub\PycharmProjects\Evox\test.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

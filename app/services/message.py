@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from fastapi import HTTPException, status
 
+
 def get(id: int, db: Session):
     message = db.query(models.Message).filter(models.Message.id == id)
 
@@ -9,11 +10,12 @@ def get(id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Message with id {id} not found.")
 
     # increase number of views witch each get
-    message.update({"counter": message.first().counter+1})
+    message.update({"counter": message.first().counter + 1})
     db.commit()
     db.refresh(message.first())
 
     return message.first()
+
 
 def create(request: schemas.Message, db: Session):
     new_message = models.Message(content=request.content)
@@ -31,13 +33,9 @@ def delete(id: int, db: Session):
     if not message.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Message with id {id} not found.")
 
-
     message.delete(synchronize_session=False)
     db.commit()
     return message
-
-
-
 
 
 def update(id: int, request: schemas.Message, db: Session):
@@ -45,7 +43,6 @@ def update(id: int, request: schemas.Message, db: Session):
 
     if not message.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Message with id {id} not found.")
-
 
     message.update({"content": request.content, "counter": 0})
 

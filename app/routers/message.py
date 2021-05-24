@@ -18,12 +18,14 @@ async def get_message(id: int, db: Session = Depends(get_db)):
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-async def create_message(request: schemas.Message, db: Session = Depends(get_db), authentication: bool = Depends(verify_api_key)):
+async def create_message(request: schemas.Message, db: Session = Depends(get_db),
+                         authentication: bool = Depends(verify_api_key)):
     return message.create(request, db)
 
 
 @router.put('/{id}', status_code=status.HTTP_200_OK)
-async def update_message(id: int, request: schemas.Message, db: Session = Depends(get_db), authentication: bool = Depends(verify_api_key)):
+async def update_message(id: int, request: schemas.Message, db: Session = Depends(get_db),
+                         authentication: bool = Depends(verify_api_key)):
     return message.update(id, request, db)
 
 
