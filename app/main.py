@@ -5,7 +5,7 @@ from app.routers import message
 
 app = FastAPI()
 
-models.Model.__table__.drop(engine)
+models.Message.__table__.drop(engine)
 
 models.Base.metadata.create_all(bind=engine)
 
