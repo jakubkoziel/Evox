@@ -2,6 +2,14 @@
 
 REST API written in FastAPI framework.
 
+### Running app locally
+
+For this purpose there are two shell scripts provided.
+
+Use `start.sh` to build app.
+
+Use `start-tests.sh` to run tests.
+
 
 ## API
 
@@ -54,7 +62,7 @@ Example of response body:
 HTTP Header:
 Authorization: 8ucof2zKmuG3RNxofGBfKLiuVnBNDXfhNPoAdFqNF40
 ```
-API Key for Heroku server is being set as environmental variable.
+API Key for Heroku server is being set as environmental variable and its value is shown above.
 
 ### Unit and integration tests
 
@@ -65,6 +73,9 @@ This app is currently deployed on Heroku.
 
 Application is listening on the following URL: [https://evox-koziel.herokuapp.com/messages/](https://evox-koziel.herokuapp.com/messages/)
 
+You need to set up environmental variable API Key while deploying app.
+
+Heroku CLI can be used `heroku config:set API_KEY=<API_KEY VALUE>`
 
 ## API usage examples
 
